@@ -36,6 +36,8 @@ class MyWindow(QMainWindow):
         self.load()
         self.append_data()
         json.dump(self.data, open(self.inputSavePath.text(), 'w'))
+        self.inputPrompt.setText("")
+        self.inputAnswer.setText("")
 
     def define_page_layout(self):
         self.setGeometry(200, 200, 300, 300)
