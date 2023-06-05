@@ -9,11 +9,21 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QHBoxLayout,
 
 # %%
 
+
+
 class MyWindow(QMainWindow):
     def __init__(self):
         super(MyWindow, self).__init__()
-
+        
         self.define_page_layout()
+        
+        # TODO: Make a config object that knows how to extract its information.
+        self.config = json.load(open('./config.json'))
+
+        self.parse_config()
+
+    def parse_config(self):
+        self.pathcarddata = self.config['pathToCardData']
 
     def get_unique_identifier(self):
         self.load()
@@ -22,7 +32,8 @@ class MyWindow(QMainWindow):
         return str(max_index + 1)
 
     def load(self):
-        self.data = json.load(open(self.inputSavePath.text()))
+        # self.data = json.load(open(self.inputSavePath.text()))
+        self.data = json.load(open(self.pathcarddata))
 
     def append_data(self):
         list_cards = self.data['cards']
@@ -38,7 +49,8 @@ class MyWindow(QMainWindow):
     def save(self):
         self.load()
         self.append_data()
-        json.dump(self.data, open(self.inputSavePath.text(), 'w'))
+        # json.dump(self.data, open(self.inputSavePath.text(), 'w'))
+        json.dump(self.data, open(self.pathcarddata, 'w'))
         self.inputPrompt.setText("")
         self.inputAnswer.setText("")
 
